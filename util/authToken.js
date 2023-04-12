@@ -9,7 +9,6 @@ export const clearTokenFromLocalStorage = () => localStorage.removeItem("token")
 export const clearTokenFromSessionStorage = () => sessionStorage.removeItem("token")
 export const saveTokenToSessionStorage = (item) => {
   const parsedToken = item.substring(7)
-  console.log(parsedToken);
   return sessionStorage.setItem("token", parsedToken)
 }
 export const clearTokenFromCookie = () => Cookies.remove("token")

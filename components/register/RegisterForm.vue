@@ -39,9 +39,11 @@
 </template>
 
 <script>
-import { mapActions } from "vuex"
+import { mapActions, mapState } from "vuex"
 import { generateHashedPassword } from "~/util/encryption"
+import { saveTokenToSessionStorage } from "~/util/authToken"
 import authAPI from "~/oksu_api/auth"
+
 export default {
     data() {
         const FIELD = {
@@ -85,24 +87,36 @@ export default {
             //     ],
         }
     },
+    ...mapState("auth", ["authToken"]),
 
 methods: {
     ...mapActions("auth", ["loginRequest", "loginStatusRequest"]),
     handleRegister(){
-        const encryptedInfoForm ={
-            ...this.infoForm,
-            user_pw: generateHashedPassword(this.infoForm.user_pw),
+        const encryptedInfoForm = {
+          ...this.infoForm,
+          user_pw: generateHashedPassword(this.infoForm.user_pw),
         }
-        try {authAPI.postRegister(encryptedInfoForm)
-            .then(()=>{
-                this.$router.replace("/landing")
-            }) 
-        }
-        catch(err) {
-            alert(err)
-            }
-        }
-}
+        authAPI.postRegister(encryptedInfoForm)
+        .then(() => {
+          // eslint-disable-next-line camelcase
+          const { user_id, user_pw } = this.infoForm
+          // console.log(user_id, user_pw)
+          // console.log(this.infoForm);
+          // eslint-disable-next-line camelcase
+          return this.loginRequest({ id: user_id, pw: user_pw })
+        })
+         .then((token) => {
+          /* 세션에 토큰 저장 */
+          saveTokenToSessionStorage(token)})
+        .then(()=> this.loginStatusRequest())
+        .then(() => this.$router.replace("/landing"))
+        .catch((error) => {
+          alert(error)  
+          this.$router.replace("/")
+        })
+      },
+      
+    },
 }
 </script>
 

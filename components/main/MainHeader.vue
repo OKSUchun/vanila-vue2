@@ -4,7 +4,6 @@
         <img src="~/assets/logo_oksu.png" class="main-bi" />
     </NuxtLink>
     <div>
-    <!-- <div v-if="!isLoggedIn"> -->
         <NuxtLink to="/login">
           <button class="sml-btn">로그인 / 회원가입</button>
         </NuxtLink>
@@ -29,14 +28,11 @@ export default {
 
   width: 100%;
   height: 60px;
-  /* padding: 0 240px; */
   background-color: #222;
   /* z-index: 999; */
 }
 .main-bi {
   height: 100px;
-  /* position : absolute; */
-  /* align-self: ; */
 }
 .sml-btn {
   font-size: 16px;

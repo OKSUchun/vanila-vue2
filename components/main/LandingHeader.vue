@@ -7,14 +7,16 @@
     <NuxtLink to="/login">
       <div class="user_info">{{ currentUser['USER_NM'] }}</div>
     </NuxtLink>
+    <LogoutButton/>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
+import LogoutButton from './LogoutButton.vue';
 export default {
+  components: { LogoutButton },
   computed: {
-    // ...mapGetters("auth", ["currentUser"]),
     ...mapState("auth", ["currentUser"]),
   },
   created() {

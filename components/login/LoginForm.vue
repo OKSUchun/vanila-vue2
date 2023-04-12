@@ -35,8 +35,7 @@ export default {
             this.loginRequest({ id, pw })
                 /* 로그인에 성공한 경우 */
                 .then((token) => {
-                    console.log("token 획득",token)
-                    /* 쿠키에 토큰 저장 */
+                    /* 세션에 토큰 저장 */
                     saveTokenToSessionStorage(token)
                 })
 

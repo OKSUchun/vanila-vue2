@@ -34,8 +34,10 @@ axiosInstance.interceptors.response.use(
   (response) => response.data,
   (error) => {
     const errorCode = error.response?.status
+    const errorMsg = error.response.data.message
     console.log(errorCode);
-
+    console.log(errorMsg);
+    
     return Promise.reject(error)
   }
 )
